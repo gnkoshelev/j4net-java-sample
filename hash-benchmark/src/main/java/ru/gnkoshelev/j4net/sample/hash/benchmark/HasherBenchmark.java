@@ -29,10 +29,14 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.AverageTime)
 @State(Scope.Benchmark)
 public class HasherBenchmark {
-    public byte[] data = new byte[500_000];
+    @Param({"5000", "50000", "500000"})
+    public int N;
 
-    @Setup(value = Level.Iteration)
+    public byte[] data;
+
+    @Setup(value = Level.Trial)
     public void setup() {
+        data = new byte[N];
         new Random(12345).nextBytes(data);
     }
 
